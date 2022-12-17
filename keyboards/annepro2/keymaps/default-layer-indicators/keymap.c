@@ -96,7 +96,7 @@ enum anne_pro_layers {
   *
   */
  [FN2] = LAYOUT_60_ansi( /* FN2 */
-    _______, KC_AP2_BT1, KC_AP2_BT2, KC_AP2_BT3, KC_AP2_BT4, _______, _______, _______, _______, KC_AP_RGB_MOD, KC_AP_RGB_TOG, KC_AP_RGB_VAD, KC_AP_RGB_VAI, _______,
+    KC_TILD, KC_AP2_BT1, KC_AP2_BT2, KC_AP2_BT3, KC_AP2_BT4, _______, _______, _______, _______, KC_AP_RGB_MOD, KC_AP_RGB_TOG, KC_AP_RGB_VAD, KC_AP_RGB_VAI, _______,
     MO(FN2), _______,    KC_UP,      _______,    _______,    _______, _______, _______, _______, _______, KC_PSCR, KC_HOME, KC_END,  _______,
     _______, KC_LEFT,    KC_DOWN,    KC_RGHT,    _______,    _______, _______, _______, _______, _______, KC_PGUP, KC_PGDN, _______,
     _______,             _______,    _______,    _______,    _______, _______, _______, _______, _______, KC_INS,  KC_DEL,  _______,
@@ -112,17 +112,68 @@ void keyboard_post_init_user(void) {
 
 layer_state_t layer_state_set_user(layer_state_t state) {
     switch (get_highest_layer(state)) {
-        case FN1:
+        case FN1: {
             // Set the leds to green
-            ap2_led_set_foreground_color(0x00, 0xFF, 0x00);
+            //ap2_led_set_foreground_color(0x00, 0xFF, 0x00);
+            const ap2_led_t color = {.p.red = 0x00, .p.green = 0xFF, .p.blue = 0x00, .p.alpha = 0xFF};
+
+            for (unsigned int col = 0; col < 14; col++)
+            {
+                ap2_led_sticky_set_key(0, col, color);
+            }
+
+            ap2_led_sticky_set_key(1, 2, color);
+            ap2_led_sticky_set_key(1, 10, color);
+            ap2_led_sticky_set_key(1, 11, color);
+            ap2_led_sticky_set_key(1, 12, color);
+
+            ap2_led_sticky_set_key(2, 1, color);
+            ap2_led_sticky_set_key(2, 2, color);
+            ap2_led_sticky_set_key(2, 3, color);
+            ap2_led_sticky_set_key(2, 10, color);
+            ap2_led_sticky_set_key(2, 11, color);
+
+            ap2_led_sticky_set_key(3, 2, color);
+            ap2_led_sticky_set_key(3, 3, color);
+            ap2_led_sticky_set_key(3, 4, color);
+            ap2_led_sticky_set_key(3, 10, color);
+            ap2_led_sticky_set_key(3, 11, color);
             break;
-        case FN2:
+        }
+        case FN2: {
             // Set the leds to blue
-            ap2_led_set_foreground_color(0x00, 0x00, 0xFF);
+            // ap2_led_set_foreground_color(0x00, 0x00, 0xFF);
+            const ap2_led_t color = {.p.red = 0x00, .p.green = 0x00, .p.blue = 0xFF, .p.alpha = 0xFF};
+
+            ap2_led_sticky_set_key(0, 0, color);
+            ap2_led_sticky_set_key(0, 1, color);
+            ap2_led_sticky_set_key(0, 2, color);
+            ap2_led_sticky_set_key(0, 3, color);
+            ap2_led_sticky_set_key(0, 4, color);
+            ap2_led_sticky_set_key(0, 9, color);
+            ap2_led_sticky_set_key(0, 10, color);
+            ap2_led_sticky_set_key(0, 11, color);
+            ap2_led_sticky_set_key(0, 12, color);
+
+            ap2_led_sticky_set_key(1, 2, color);
+            ap2_led_sticky_set_key(1, 10, color);
+            ap2_led_sticky_set_key(1, 11, color);
+            ap2_led_sticky_set_key(1, 12, color);
+
+            ap2_led_sticky_set_key(2, 1, color);
+            ap2_led_sticky_set_key(2, 2, color);
+            ap2_led_sticky_set_key(2, 3, color);
+            ap2_led_sticky_set_key(2, 10, color);
+            ap2_led_sticky_set_key(2, 11, color);
+
+            ap2_led_sticky_set_key(3, 10, color);
+            ap2_led_sticky_set_key(3, 11, color);
             break;
+        }
         default:
             // Reset back to the current profile
             ap2_led_reset_foreground_color();
+            ap2_led_unset_sticky_all();
             break;
     }
     return state;
@@ -133,7 +184,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 bool led_update_user(led_t leds) {
     if (leds.caps_lock) {
         // Set the caps-lock to red
-        const ap2_led_t color = {.p.red = 0xff, .p.green = 0x00, .p.blue = 0x00, .p.alpha = 0xff};
+        const ap2_led_t color = {.p.red = 0xFF, .p.green = 0x00, .p.blue = 0x00, .p.alpha = 0xFF};
         ap2_led_sticky_set_key(2, 0, color);
         /* NOTE: Instead of colouring the capslock only, you can change the whole
            keyboard with ap2_led_mask_set_mono */

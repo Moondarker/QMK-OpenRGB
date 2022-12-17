@@ -37,6 +37,7 @@ RGB_MATRIX_DRIVER = custom
 # Keys
 CUSTOM_MATRIX = lite
 KEY_LOCK_ENABLE = no
+DEBOUNCE_TYPE = asym_eager_defer_pk
 
 # Other features
 RAW_ENABLE = no

@@ -59,3 +59,6 @@
 // Wear-leveling driver configuration
 #define WEAR_LEVELING_LOGICAL_SIZE 1024
 #define WEAR_LEVELING_BACKING_SIZE (WEAR_LEVELING_LOGICAL_SIZE * 2)
+
+#define USB_POLLING_INTERVAL_MS 1
+#define DEBOUNCE 3
